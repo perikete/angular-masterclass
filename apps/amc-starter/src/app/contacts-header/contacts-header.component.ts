@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contacts-header.component.css']
 })
 export class ContactsHeaderComponent implements OnInit {
+  
   constructor() {}
 
   ngOnInit() {}

@@ -150,6 +150,6 @@ app.get('/api/check-email', function (req, res) {
   }
 });
 
-app.listen(4201, () => console.log('REST API running on port 4201'));
+app.listen(4202, () => console.log('REST API running on port 4202'));
 
 

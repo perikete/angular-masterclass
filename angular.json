@@ -7,7 +7,7 @@
       "root": "apps/amc-starter/",
       "sourceRoot": "apps/amc-starter/src",
       "projectType": "application",
-      "prefix": "apps/amc-starter",
+      "prefix": "amc",
       "schematics": {},
       "architect": {
         "build": {
