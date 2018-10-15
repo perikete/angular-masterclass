@@ -1,6 +1,6 @@
 <mat-toolbar>
     <mat-form-field color="accent" class="trm-search-container">
-        <input matInput (input)="search($event.target.value)" type="text">
+        <input matInput (input)="terms$.next($event.target.value)" type="text">
     </mat-form-field>
     <mat-icon color="accent">search</mat-icon>
 </mat-toolbar>
