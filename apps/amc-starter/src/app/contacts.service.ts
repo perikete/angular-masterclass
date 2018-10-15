@@ -13,8 +13,6 @@ const API_ENDPOINT = 'http://localhost:4202/api';
 })
 export class ContactsService {
 
-  private _contacts = CONTACT_DATA;
-
   constructor(private _http: HttpClient) { }
 
   public getContacts(): Observable<Contact[]> {

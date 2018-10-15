@@ -9,11 +9,12 @@ import { Observable } from 'rxjs';
   templateUrl: './contacts-list.component.html'
 })
 export class ContactsListComponent implements OnInit {
-  contacts: Observable<Contact[]>;
+
+  contacts$: Observable<Contact[]>;
 
   constructor(private _contactsService: ContactsService) { }
 
   ngOnInit() {
-    this.contacts = this._contactsService.getContacts();
+    this.contacts$ = this._contactsService.getContacts();    
   }
 }
