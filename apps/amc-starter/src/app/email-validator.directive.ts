@@ -15,7 +15,7 @@ export class EmailValidatorDirective {
 
   constructor() { }
 
-  static validatEmail(c: FormControl) {
+  static validatEmail(c: FormControl) : ValidationErrors {
     return VALID_EMAIL.test(c.value) || c.value === '' ? null : {
       validateEmail: {
         valid: false

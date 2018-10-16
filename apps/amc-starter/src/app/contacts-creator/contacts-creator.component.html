@@ -37,7 +37,7 @@
                 #email="ngModel" 
                 ngModel>
 
-                <mat-hint *ngIf="!email.valid && !email.pristine && !email.untouched">
+                <mat-hint align="end" *ngIf="!email.valid && !email.pristine && !email.untouched">
                   <ng-container *ngIf="email.errors?.validateEmail">
                     Please enter a valid email
                   </ng-container>
