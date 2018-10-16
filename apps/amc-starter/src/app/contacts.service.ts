@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Contact } from './models/contact';
 import { HttpClient } from '@angular/common/http';
-import { ContactsResponse, ContactReponse } from './contact.responses';
+import { ContactsResponse, ContactReponse, EmailCheckResponse } from './contact.responses';
 import { map, delay, takeUntil, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, merge } from 'rxjs';
 
@@ -23,6 +23,10 @@ export class ContactsService {
   public getContact(id: number): Observable<Contact> {
     return this._http.get<ContactReponse>(`${API_ENDPOINT}/contacts/${id}`)
       .pipe(map(data => data.item));
+  }
+
+  public isEmailAvailable(email: string) : any {
+    return this._http.get(`${API_ENDPOINT}/check-email?email=${email}`);      
   }
 
   public search(terms: Observable<string>, debounceMs = 400): Observable<Contact[]> {
@@ -47,7 +51,7 @@ export class ContactsService {
       .pipe(map(data => data.item))
   }
 
-  public addContact(contact: Contact) : Observable<Contact> {
+  public addContact(contact: Contact): Observable<Contact> {
     return this._http.post<ContactReponse>(`${API_ENDPOINT}/contacts`, contact)
       .pipe(map(data => data.item))
   }

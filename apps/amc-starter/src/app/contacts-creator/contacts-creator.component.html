@@ -35,11 +35,15 @@
                 placeholder="Email" 
                 name="email"
                 #email="ngModel" 
+                trmCheckEmailAvailability
                 ngModel>
 
                 <mat-hint align="end" *ngIf="!email.valid && !email.pristine && !email.untouched">
                   <ng-container *ngIf="email.errors?.validateEmail">
                     Please enter a valid email
+                  </ng-container>
+                  <ng-container *ngIf="email.errors?.emailTaken">
+                    This email address is already taken
                   </ng-container>
                 </mat-hint>
             </mat-form-field>
