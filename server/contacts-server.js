@@ -102,7 +102,7 @@ app.get('/api/contacts/:id', function (req, res) {
 app.post('/api/contacts', function (req, res) {
   if (isContact(req.body)) {
     req.body.id = getNextId();
-    req.body.image = '/assets/images/placeholder.png';
+    req.body.image = './assets/images/placeholder.png';
     db.push(req.body);
     res.json(singleResponse(req.body));
   }

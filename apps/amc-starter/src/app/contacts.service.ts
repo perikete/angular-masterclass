@@ -31,7 +31,6 @@ export class ContactsService {
 
     const allContacts$ = this.getContacts()
       .pipe(
-        delay(5000), 
         takeUntil(terms)
       );
 
@@ -45,6 +44,11 @@ export class ContactsService {
 
   public updateContact(contact: Contact): Observable<Contact> {
     return this._http.put<ContactReponse>(`${API_ENDPOINT}/contacts/${contact.id}`, contact)
+      .pipe(map(data => data.item))
+  }
+
+  public addContact(contact: Contact) : Observable<Contact> {
+    return this._http.post<ContactReponse>(`${API_ENDPOINT}/contacts`, contact)
       .pipe(map(data => data.item))
   }
 }

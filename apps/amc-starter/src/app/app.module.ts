@@ -13,9 +13,11 @@ import { ContactsDetailsComponent } from './contacts-details/contacts-details.co
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
+import { ContactsCreatorComponent } from './contacts-creator/contacts-creator.component';
+import { EmailValidatorDirective } from './email-validator.directive';
 
 @NgModule({
-  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailsComponent, ContactsEditorComponent],
+  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailsComponent, ContactsEditorComponent, ContactsCreatorComponent, EmailValidatorDirective],
   imports: [
     FormsModule,
     BrowserModule,
@@ -26,9 +28,9 @@ import { ContactsEditorComponent } from './contacts-editor/contacts-editor.compo
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
     HttpClientModule,
-    
+
   ],
-  bootstrap: [ContactsAppComponent],  
-  providers: [ ContactsService ]  
+  bootstrap: [ContactsAppComponent],
+  providers: [ContactsService]
 })
-export class ContactsModule {}
+export class ContactsModule { }
