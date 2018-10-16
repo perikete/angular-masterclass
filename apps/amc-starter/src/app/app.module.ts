@@ -11,14 +11,15 @@ import { APP_ROUTES } from './app.routes';
 import { ContactsListComponent } from './contacts-list';
 import { ContactsDetailsComponent } from './contacts-details/contacts-details.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
 import { ContactsCreatorComponent } from './contacts-creator/contacts-creator.component';
 import { EmailValidatorDirective } from './email-validator.directive';
 import { EmailAvailabilityValidatorDirective } from './email-availability-validator.directive';
+import { AddressInputComponent } from './address-input/address-input.component';
 
 @NgModule({
-  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailsComponent, ContactsEditorComponent, ContactsCreatorComponent, EmailValidatorDirective, EmailAvailabilityValidatorDirective],
+  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailsComponent, ContactsEditorComponent, ContactsCreatorComponent, EmailValidatorDirective, EmailAvailabilityValidatorDirective, AddressInputComponent],
   imports: [
     FormsModule,
     BrowserModule,
@@ -29,7 +30,7 @@ import { EmailAvailabilityValidatorDirective } from './email-availability-valida
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
     HttpClientModule,
-
+    ReactiveFormsModule 
   ],
   bootstrap: [ContactsAppComponent],
   providers: [ContactsService]

@@ -1,88 +1,71 @@
 <div class="trm-contacts-creator">
-    <form #form="ngForm" novalidate (ngSubmit)="submit(form.value)">
-      <mat-card>
-        <mat-card-title-group>
-          <img mat-card-md-image alt="Placeholder image" src="assets/images/placeholder.png">
-          <mat-card-title></mat-card-title>
-          <mat-card-subtitle></mat-card-subtitle>
-        </mat-card-title-group>
-        <mat-card-content>
-          <div fxLayout="column">
-            <mat-form-field fxFlex [color]="name.errors ? 'warn': 'primary'">
-              <input 
-                matInput 
-                placeholder="Name" 
-                name="name" 
-                required 
-                #name="ngModel"
-                minlength="3" 
-                ngModel>
+  <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value)">
+    <mat-card>
+      <mat-card-title-group>
+        <img mat-card-md-image alt="Placeholder image" src="assets/images/placeholder.png">
+        <mat-card-title></mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-content>
+        <div fxLayout="column">
+          <mat-form-field fxFlex [color]="form.get('name').errors ? 'warn': 'primary'">
+            <input placeholder="Name" matInput formControlName="name">
+            <mat-hint *ngIf="!form.get('name').valid && !form.get('name').pristine">
+              <ng-container *ngIf="form.get('name').errors?.required">
+                This field is required
+              </ng-container>
 
-                <mat-hint *ngIf="!name.valid && !name.pristine">
-                  <ng-container *ngIf="name.errors?.required">
-                    This field is required
-                  </ng-container>
+              <ng-container *ngIf="form.get('name').errors?.minlength">
+                A name must be at least {{ form.get('name').errors.minlength.requiredLength }} characters
+              </ng-container>
+            </mat-hint>
+          </mat-form-field>
 
-                  <ng-container *ngIf="name.errors?.minlength">
-                    A name must be at least {{ name.errors.minlength.requiredLength }} characters
-                  </ng-container>
-                </mat-hint>
-            </mat-form-field>
-            <mat-form-field fxFlex [color]="email.errors ? 'warn' : 'primary'">
-              <input 
-                matInput
-                trmValidateEmail
-                placeholder="Email" 
-                name="email"
-                #email="ngModel" 
-                trmCheckEmailAvailability
-                ngModel>
+          <mat-form-field fxFlex [color]="form.get('email').errors ? 'warn' : 'primary'">
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-hint align="end" *ngIf="!form.get('email').valid && !form.get('email').pristine && !form.get('email').untouched">
+              <ng-container *ngIf="form.get('email').errors?.validateEmail">
+                Please enter a valid email
+              </ng-container>
+              <ng-container *ngIf="form.get('email').errors?.emailTaken">
+                This email address is already taken
+              </ng-container>
+            </mat-hint>
+          </mat-form-field>
 
-                <mat-hint align="end" *ngIf="!email.valid && !email.pristine && !email.untouched">
-                  <ng-container *ngIf="email.errors?.validateEmail">
-                    Please enter a valid email
-                  </ng-container>
-                  <ng-container *ngIf="email.errors?.emailTaken">
-                    This email address is already taken
-                  </ng-container>
-                </mat-hint>
-            </mat-form-field>
-
-            <mat-form-field fxFlex>
-              <input matInput placeholder="Birthday" name="birthday" type="date" ngModel>
-            </mat-form-field>
-            <mat-form-field fxFlex>
-              <input matInput placeholder="Phone" name="phone" ngModel>
-            </mat-form-field>
-            <mat-form-field fxFlex>
-              <input matInput placeholder="Website" name="website" ngModel>
-            </mat-form-field>
-            <mat-radio-group align="left" placeholder="Gender" name="gender" ngModel>
-              <mat-radio-button *ngFor="let gender of genders"  [value]="gender">
-                {{ gender }}
-              </mat-radio-button>
-            </mat-radio-group>
-            <fieldset fxLayout="column">
-              <legend>Address</legend>
-              <mat-form-field fxFlex>
-                <input matInput placeholder="Street" name="street" ngModel>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Birthday" formControlName="birthday" type="date">
+          </mat-form-field>
+          <div formArrayName="phone">
+            <div *ngFor="let phone of form.get('phone').controls; let i = index; let isLast = last">
+              <mat-form-field>
+                <input matInput placeholder="Phone" [formControlName]="i">
               </mat-form-field>
-              <mat-form-field fxFlex>
-                <input matInput placeholder="Zip" name="zip" ngModel>
-              </mat-form-field>
-              <mat-form-field fxFlex>
-                <input matInput placeholder="City" name="city" ngModel>
-              </mat-form-field>
-              <mat-select placeholder="Country" name="country" ngModel>
-                <mat-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</mat-option>
-              </mat-select>
-            </fieldset>
+              <button mat-icon-button type="button" *ngIf="i >= 1" (click)="removePhoneField(i)">
+                <mat-icon>highlight_off</mat-icon>
+              </button>
+
+              <button mat-icon-button type="button" *ngIf="isLast && phone.value != ''" (click)="addPhoneField()">
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+            </div>
           </div>
-        </mat-card-content>
-        <mat-card-actions fxLayout fxLayoutAlign="center center">
-          <button mat-button type="submit" [disabled]="!form.valid">Save</button>
-          <a routerLink="/" mat-button title="Cancel creating new contact">Cancel</a>
-        </mat-card-actions>
-      </mat-card>
-    </form>
-  </div> 
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Website" formControlName="website">
+          </mat-form-field>
+          <mat-radio-group align="left" placeholder="Gender" formControlName="gender">
+            <mat-radio-button *ngFor="let gender of genders" [value]="gender">
+              {{ gender }}
+            </mat-radio-button>
+          </mat-radio-group>
+          <trm-address-input formControlName="address">
+          </trm-address-input>
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout fxLayoutAlign="center center">
+        <button mat-button type="submit" [disabled]="!form.valid">Save</button>
+        <a routerLink="/" mat-button title="Cancel creating new contact">Cancel</a>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

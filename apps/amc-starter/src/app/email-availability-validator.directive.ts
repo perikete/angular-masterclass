@@ -4,6 +4,11 @@ import { FormControl, NG_ASYNC_VALIDATORS } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
 
+export function checkEmailAvailability(contactsService: ContactsService) {
+  return (c: FormControl) => !c.value ? of(null) : contactsService.isEmailAvailable(c.value)
+    .pipe(map((res: any) => !res.error ? null : { emailTaken: true }));
+}
+
 @Directive({
   selector: '[trmCheckEmailAvailability]',
   providers: [
@@ -17,13 +22,9 @@ import { of } from 'rxjs';
 export class EmailAvailabilityValidatorDirective {
 
   constructor(private _contactsService: ContactsService) { }
-
-  private checkEmailAvailability(email?: string) {
-    return !email ? of(null) : this._contactsService.isEmailAvailable(email)
-      .pipe(map((res: any) => !res.error ? null : { emailTaken: true }));
-  }
+  
 
   validate(c: FormControl) {
-    return this.checkEmailAvailability(c.value);
+    return checkEmailAvailability(this._contactsService)(c);
   }
 }
