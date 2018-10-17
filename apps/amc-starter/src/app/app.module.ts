@@ -21,7 +21,6 @@ import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-det
 import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tabs/tab/tab.component';
 import { ContactsDashhboardComponent } from './contacts-dashhboard/contacts-dashhboard.component';
-import { AboutModule } from './about/about.module';
 
 export function confirmNavigationGuard(component) {
   debugger;
