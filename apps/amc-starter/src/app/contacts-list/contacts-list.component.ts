@@ -3,6 +3,9 @@ import { Contact } from '../models/contact';
 import { ContactsService } from '../contacts.service';
 import { Observable, Subject } from 'rxjs';
 import { EventBusService } from '../event-bus.service';
+import { ApplicationState } from '../state/app-state';
+import { Store } from '@ngrx/store';
+import { LoadContactSuccessAction } from '../state/contacts/contacts.action';
 
 @Component({
   selector: 'trm-contacts-list',
@@ -14,11 +17,18 @@ export class ContactsListComponent implements OnInit {
   terms$ = new Subject<string>();
 
   constructor(
-    private _contactsService: ContactsService, 
-    private _eventBusService: EventBusService) { }
+    private _contactsService: ContactsService,
+    private _eventBusService: EventBusService,
+    private _store: Store<ApplicationState>) { }
 
   ngOnInit() {
-    this.contacts$ = this._contactsService.search(this.terms$);
+    const query = (state: ApplicationState) => state.contacts.list;
+    this.contacts$ = this._store.select(query);
+
+    this._contactsService.search(this.terms$).subscribe(contacts => {
+      this._store.dispatch(new LoadContactSuccessAction(contacts));
+    });
+
     this._eventBusService.emit('appTitleChange', 'Contacts');
   }
 }

@@ -21,6 +21,12 @@ import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-det
 import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tabs/tab/tab.component';
 import { ContactsDashhboardComponent } from './contacts-dashhboard/contacts-dashhboard.component';
+import { StoreModule } from '@ngrx/store';
+import { environment } from '../environments/environment.prod';
+import { storeFreeze } from 'ngrx-store-freeze';
+import { EffectsModule } from '@ngrx/effects';
+import { FEATURE_KEY, contactsReducer, INITIAL_STATE } from './state/contacts/contacts.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 export function confirmNavigationGuard(component) {
   debugger;
@@ -53,8 +59,11 @@ export function confirmNavigationGuard(component) {
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
     HttpClientModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
+    StoreModule.forRoot({}, { metaReducers: !environment.production ? [storeFreeze] : [] }),
+    EffectsModule.forRoot([]),
+    StoreModule.forFeature(FEATURE_KEY, contactsReducer, { initialState: INITIAL_STATE }),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   bootstrap: [ContactsAppComponent],
   providers: [
