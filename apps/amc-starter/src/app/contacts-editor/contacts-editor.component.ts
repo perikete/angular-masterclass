@@ -13,6 +13,7 @@ import { EventBusService } from '../event-bus.service';
 export class ContactsEditorComponent implements OnInit {
 
   public contact: Observable<Contact>;
+  public warnOnClosing = true;
   
   constructor(
     private _contactsService: ContactsService, 
@@ -31,12 +32,13 @@ export class ContactsEditorComponent implements OnInit {
   }
 
   save(contact: Contact) {    
-    this._contactsService.updateContact(contact)
-    .subscribe(() => this.goToDetails(contact));
+    this._contactsService.updateContact(contact).subscribe(() => this.goToDetails(contact));
+    this.warnOnClosing = false;
   }
 
   private goToDetails(contact: Contact) {
     this._router.navigate(['/contact', contact.id]);
+    this.warnOnClosing = false;
   }
 
 }

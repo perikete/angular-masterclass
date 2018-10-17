@@ -1,6 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<mat-toolbar color="primary">{{ title}}</mat-toolbar>
+<mat-toolbar color="primary">
+  <div fxLayout fxLayoutAlign="space-between center" fxFlex>
+    {{ title}}
+    <a mat-button title="Go to about page" routerLink="/about" class="right">
+      About</a>
+  </div>
+</mat-toolbar>
 
-<div style="text-align:center;background-color: #f6f6f6">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>

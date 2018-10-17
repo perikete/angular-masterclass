@@ -20,20 +20,30 @@ import { AddressInputComponent } from './address-input/address-input.component';
 import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-detail-view.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tabs/tab/tab.component';
+import { ContactsDashhboardComponent } from './contacts-dashhboard/contacts-dashhboard.component';
+import { AboutModule } from './about/about.module';
+
+export function confirmNavigationGuard(component) {
+  debugger;
+  const question = 'Navigate away without saving?';
+  return !component.warnOnClosing || window.confirm(question);
+}
 
 @NgModule({
   declarations: [
-    ContactsAppComponent, 
-    ContactsListComponent, 
-    ContactsDetailsComponent, 
-    ContactsEditorComponent, 
-    ContactsCreatorComponent, 
-    EmailValidatorDirective, 
+    ContactsAppComponent,
+    ContactsListComponent,
+    ContactsDetailsComponent,
+    ContactsEditorComponent,
+    ContactsCreatorComponent,
+    EmailValidatorDirective,
     EmailAvailabilityValidatorDirective,
-    AddressInputComponent, 
-    ContactsDetailViewComponent, 
-    TabsComponent, 
-    TabComponent],
+    AddressInputComponent,
+    ContactsDetailViewComponent,
+    TabsComponent,
+    TabComponent,
+    ContactsDashhboardComponent
+  ],
   imports: [
     FormsModule,
     BrowserModule,
@@ -45,8 +55,12 @@ import { TabComponent } from './tabs/tab/tab.component';
     RouterModule.forRoot(APP_ROUTES),
     HttpClientModule,
     ReactiveFormsModule
+    
   ],
   bootstrap: [ContactsAppComponent],
-  providers: [ContactsService]
+  providers: [
+    ContactsService,
+    { provide: 'ConfirmNavigationGuard', useValue: confirmNavigationGuard }
+  ]
 })
 export class ContactsModule { }

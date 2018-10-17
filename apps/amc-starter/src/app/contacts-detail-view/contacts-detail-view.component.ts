@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts.service';
 import { Observable } from 'rxjs';
 import { EventBusService } from '../event-bus.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'trm-contacts-detail-view',
@@ -15,14 +16,16 @@ export class ContactsDetailViewComponent implements OnInit {
   contact: Observable<Contact>;
 
   constructor(
-    private _route: ActivatedRoute, 
-    private _router: Router, 
+    private _route: ActivatedRoute,
+    private _router: Router,
     private _contactsService: ContactsService,
     private _eventBusService: EventBusService) { }
 
   ngOnInit() {
-    const id = this._route.snapshot.params['id'];
-    this.contact = this._contactsService.getContact(id);
+    this.contact = this._route.paramMap
+      .pipe(
+        switchMap(paramMap => this._contactsService.getContact(+paramMap.get('id'))));
+
     this._eventBusService.emit('appTitleChange', 'Viewing contact');
   }
 
