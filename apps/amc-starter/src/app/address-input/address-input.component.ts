@@ -1,7 +1,7 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormBuilder, FormGroup, ControlValueAccessor } from '@angular/forms';
 import { COUNTRIES_DATA } from '../data/countries-data';
-import { Address } from 'cluster';
+import { Address } from '../models/contact';
 
 @Component({
   selector: 'trm-address-input',  
@@ -19,7 +19,7 @@ export class AddressInputComponent implements OnInit, ControlValueAccessor {
 
   countries = COUNTRIES_DATA;
   form: FormGroup;
-  propagateChange = (_:Address) => {};
+  propagateChange = (_: Address) => {};
   propagateTouch = (_: any) => {};
   
   

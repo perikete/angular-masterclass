@@ -1,0 +1,4 @@
+<div *ngIf="contact | async; let contact; else loading">
+  <trm-contacts-details [contact]="contact" (edit)="navigateToEdit($event)" (back)="navigateToList()"></trm-contacts-details>
+</div>
+<ng-template #loading>Loading Contact Data...</ng-template>
