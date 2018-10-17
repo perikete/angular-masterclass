@@ -3,6 +3,7 @@ import { ContactsService } from '../contacts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
+import { EventBusService } from '../event-bus.service';
 
 @Component({
   selector: 'amc-contacts-editor',
@@ -13,11 +14,16 @@ export class ContactsEditorComponent implements OnInit {
 
   public contact: Observable<Contact>;
   
-  constructor(private _contactsService: ContactsService, private _activatedRoute: ActivatedRoute, private _router: Router) { }
+  constructor(
+    private _contactsService: ContactsService, 
+    private _activatedRoute: ActivatedRoute, 
+    private _router: Router,
+    private _eventBusService: EventBusService) { }
 
   ngOnInit() {
     const id = this._activatedRoute.snapshot.params['id'];
-    this.contact = this._contactsService.getContact(id);    
+    this.contact = this._contactsService.getContact(id); 
+    this._eventBusService.emit('appTitleChange', 'Editing contact');   
   }
 
   cancel(contact: Contact) {

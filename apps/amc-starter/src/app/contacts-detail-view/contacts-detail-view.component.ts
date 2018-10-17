@@ -3,6 +3,7 @@ import { Contact } from '../models/contact';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts.service';
 import { Observable } from 'rxjs';
+import { EventBusService } from '../event-bus.service';
 
 @Component({
   selector: 'trm-contacts-detail-view',
@@ -13,11 +14,16 @@ export class ContactsDetailViewComponent implements OnInit {
 
   contact: Observable<Contact>;
 
-  constructor(private _route: ActivatedRoute, private _router: Router, private _contactsService: ContactsService) { }
+  constructor(
+    private _route: ActivatedRoute, 
+    private _router: Router, 
+    private _contactsService: ContactsService,
+    private _eventBusService: EventBusService) { }
 
   ngOnInit() {
     const id = this._route.snapshot.params['id'];
     this.contact = this._contactsService.getContact(id);
+    this._eventBusService.emit('appTitleChange', 'Viewing contact');
   }
 
   navigateToList() {

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, EmailValidator, FormArray, FormControl } from '@angular/forms';
 import { EmailValidatorDirective } from '../email-validator.directive';
 import { EmailAvailabilityValidatorDirective, checkEmailAvailability } from '../email-availability-validator.directive';
+import { EventBusService } from '../event-bus.service';
 
 @Component({
   selector: 'amc-contacts-creator',
@@ -37,9 +38,11 @@ export class ContactsCreatorComponent implements OnInit {
   constructor(
     private _contactsService: ContactsService,
     private _router: Router,
-    private _formBuilder: FormBuilder) { }
+    private _formBuilder: FormBuilder,
+    private _eventBusService: EventBusService) { }
 
   ngOnInit() {
+    this._eventBusService.emit('appTitleChange', 'Create contact');
   }
 
   submit(contact: Contact) {    
