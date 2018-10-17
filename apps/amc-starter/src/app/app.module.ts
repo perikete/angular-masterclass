@@ -18,9 +18,22 @@ import { EmailValidatorDirective } from './email-validator.directive';
 import { EmailAvailabilityValidatorDirective } from './email-availability-validator.directive';
 import { AddressInputComponent } from './address-input/address-input.component';
 import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-detail-view.component';
+import { TabsComponent } from './tabs/tabs.component';
+import { TabComponent } from './tabs/tab/tab.component';
 
 @NgModule({
-  declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailsComponent, ContactsEditorComponent, ContactsCreatorComponent, EmailValidatorDirective, EmailAvailabilityValidatorDirective, AddressInputComponent, ContactsDetailViewComponent],
+  declarations: [
+    ContactsAppComponent, 
+    ContactsListComponent, 
+    ContactsDetailsComponent, 
+    ContactsEditorComponent, 
+    ContactsCreatorComponent, 
+    EmailValidatorDirective, 
+    EmailAvailabilityValidatorDirective,
+    AddressInputComponent, 
+    ContactsDetailViewComponent, 
+    TabsComponent, 
+    TabComponent],
   imports: [
     FormsModule,
     BrowserModule,
@@ -31,7 +44,7 @@ import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-det
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
     HttpClientModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule
   ],
   bootstrap: [ContactsAppComponent],
   providers: [ContactsService]
