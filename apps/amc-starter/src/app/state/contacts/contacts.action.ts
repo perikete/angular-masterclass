@@ -10,24 +10,19 @@ export enum ContactActionTypes {
 export class LoadContactSuccessAction implements Action {
     readonly type = ContactActionTypes.LOAD_CONTACTS_SUCCESS;
 
-    constructor(readonly payload: Contact[]) {
-        
-    }
-    
+    constructor(readonly payload: Contact[]) {}    
 }
 
 export class SelectContactAction implements Action {
     readonly type = ContactActionTypes.SELECT_CONTACTS_SUCCESS;
 
-    constructor(readonly payload: number) {
-    }
+    constructor(readonly payload: number) {}
 }
 
 export class UpdateContactAction implements Action {
     readonly type = ContactActionTypes.UPDATE_CONTACTS_SUCCESS;
 
-    constructor(readonly payload: Contact) {        
-    }
+    constructor(readonly payload: Contact) {}
 }
 
 export type ContactsActions = LoadContactSuccessAction 

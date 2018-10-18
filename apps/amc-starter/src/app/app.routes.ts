@@ -18,6 +18,4 @@ export const APP_ROUTES: Routes = [
         path: 'about', loadChildren: './about/about.module#AboutModule'
     },
     { path: '**', redirectTo: '' }
-
-
 ];

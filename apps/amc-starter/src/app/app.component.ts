@@ -7,14 +7,13 @@ import { EventBusService } from './event-bus.service';
   styleUrls: ['./app.component.scss']
 })
 export class ContactsAppComponent implements OnInit {
+  
   title = 'Contacts';
 
-  constructor(private _eventBusService: EventBusService) {
-  }
+  constructor(private _eventBusService: EventBusService) {}
 
   ngOnInit() {
     this._eventBusService.observe('appTitleChange')
       .subscribe(title => this.title = title);
   }
-
 }
