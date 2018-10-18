@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ContactsService } from './contacts.service';
-import { Router } from '@angular/router';
-import { LoadContactsAction, LoadContactSuccessAction, UpdateContactAction, UpdateContactSuccessAction, ContactActionTypes, SearchContactsAction, SelectContactAction } from './state/contacts/contacts.action';
-import { switchMap, map, concatMap, tap } from 'rxjs/operators';
+import { LoadContactSuccessAction, UpdateContactAction, UpdateContactSuccessAction, ContactActionTypes, SearchContactsAction, SelectContactAction, SearchContactSuccessAction } from './state/contacts/contacts.action';
+import { switchMap, map, concatMap } from 'rxjs/operators';
 import { Contact } from './models/contact';
 
 @Injectable()
@@ -31,7 +30,7 @@ export class ContactsEffects {
     ofType(ContactActionTypes.SEARCH_CONTACT),
     switchMap((action: SearchContactsAction) => this.contactsService.search(action.payload)),
     switchMap((contacts: Contact[]) =>  [
-       new LoadContactSuccessAction(contacts),
+       new SearchContactSuccessAction(contacts),
        new SelectContactAction(contacts ? +contacts[0].id : 0)
     ])
   );

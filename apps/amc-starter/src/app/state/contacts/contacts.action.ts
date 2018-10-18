@@ -9,9 +9,15 @@ export enum ContactActionTypes {
     ADD_CONTACT = '[Contacts] Add contact success',
     LOAD_CONTACTS = '[Contacts] Load contact success',
     UPDATE_CONTACT_SUCCESS = '[Contacts] Update contact success',
-    SEARCH_CONTACT = '[Contacts] Search contact'
+    SEARCH_CONTACT = '[Contacts] Search contact',
+    SEARCH_CONTACT_SUCCESS = '[Contacts] Search contact success'
 }
 
+export class SearchContactSuccessAction implements Action {
+    readonly type = ContactActionTypes.SEARCH_CONTACT_SUCCESS;
+
+    constructor(readonly payload: Contact[]) { }
+}
 
 export class SearchContactsAction implements Action {
     readonly type = ContactActionTypes.SEARCH_CONTACT;
@@ -61,4 +67,5 @@ export type ContactsActions = LoadContactSuccessAction
 | SelectContactAction
 | AddContactAction
 | LoadContactsAction
-| UpdateContactSuccessAction;
+| UpdateContactSuccessAction
+| SearchContactSuccessAction;
