@@ -29,7 +29,6 @@ import { FEATURE_KEY, contactsReducer, INITIAL_STATE } from './state/contacts/co
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 export function confirmNavigationGuard(component) {
-  debugger;
   const question = 'Navigate away without saving?';
   return !component.warnOnClosing || window.confirm(question);
 }

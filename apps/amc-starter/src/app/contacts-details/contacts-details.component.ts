@@ -8,7 +8,6 @@ import { Contact } from '../models/contact';
 })
 export class ContactsDetailsComponent implements OnInit {
 
-  
   @Input() contact: Contact;
   @Output() edit = new EventEmitter<Contact>();
   @Output() back = new EventEmitter<void>();
