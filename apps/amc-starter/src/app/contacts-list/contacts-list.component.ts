@@ -5,7 +5,9 @@ import { Observable, Subject } from 'rxjs';
 import { EventBusService } from '../event-bus.service';
 import { ApplicationState } from '../state/app-state';
 import { Store } from '@ngrx/store';
-import { LoadContactSuccessAction } from '../state/contacts/contacts.action';
+import { LoadContactSuccessAction, LoadContactsAction, SearchContactsAction } from '../state/contacts/contacts.action';
+import { ContactsQuery } from '../state/contacts/contacts-selectors';
+import { debounce, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'trm-contacts-list',
@@ -22,12 +24,15 @@ export class ContactsListComponent implements OnInit {
     private _store: Store<ApplicationState>) { }
 
   ngOnInit() {
-    const query = (state: ApplicationState) => state.contacts.list;
-    this.contacts$ = this._store.select(query);
+    this.contacts$ = this._store.select(ContactsQuery.getContacts);
 
-    this._contactsService.search(this.terms$).subscribe(contacts => {
-      this._store.dispatch(new LoadContactSuccessAction(contacts));
-    });
+    this._store.dispatch(new LoadContactsAction());
+
+    this._store.dispatch(new SearchContactsAction(this.terms$));
+
+    /* this._contactsService.search(this.terms$).subscribe(contacts => {
+   this._store.dispatch(new LoadContactSuccessAction(contacts));
+ }); */
 
     this._eventBusService.emit('appTitleChange', 'Contacts');
   }

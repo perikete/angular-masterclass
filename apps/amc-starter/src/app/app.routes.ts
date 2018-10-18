@@ -11,7 +11,7 @@ export const APP_ROUTES: Routes = [
         children: [
             { path: '', redirectTo: 'contact/0', pathMatch: 'full' },
             { path: 'contact/new', component: ContactsCreatorComponent },
-            { path: 'contact/:id', component: ContactsDetailViewComponent },
+            { path: 'contact/:id', component: ContactsDetailViewComponent, canActivate: [ContactExistsGuard] },
             {
                 path: 'contact/:id/edit', component: ContactsEditorComponent,
                 canDeactivate: ['ConfirmNavigationGuard'],

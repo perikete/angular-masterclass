@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactsService } from '../contacts.service';
 import { Router } from '@angular/router';
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
 import { EventBusService } from '../event-bus.service';
 import { ApplicationState } from '../state/app-state';
 import { Store, select } from '@ngrx/store';
-import { selectContact } from '../contact-selector.util';
 import { UpdateContactAction } from '../state/contacts/contacts.action';
 import { map } from 'rxjs/operators';
+import { ContactsQuery } from '../state/contacts/contacts-selectors';
 
 @Component({
   selector: 'amc-contacts-editor',
@@ -21,14 +20,13 @@ export class ContactsEditorComponent implements OnInit {
   public warnOnClosing = true;
 
   constructor(
-    private _contactsService: ContactsService,
     private _router: Router,
     private _eventBusService: EventBusService,
     private _store: Store<ApplicationState>) { }
 
   ngOnInit() {
     this.contact = this._store.pipe(
-      select(selectContact()),
+      select(ContactsQuery.getSelectedContact),
       map(contact => ({ ...contact })));
 
     this._eventBusService.emit('appTitleChange', 'Editing contact');
@@ -39,11 +37,9 @@ export class ContactsEditorComponent implements OnInit {
   }
 
   save(contact: Contact) {
-    this._contactsService.updateContact(contact)
-      .subscribe(() => {
-        this._store.dispatch(new UpdateContactAction(contact));
-        this.goToDetails(contact);
-      });
+    this._store.dispatch(new UpdateContactAction(contact)); 
+    
+    this.goToDetails(contact);
   }
 
   private goToDetails(contact: Contact) {
