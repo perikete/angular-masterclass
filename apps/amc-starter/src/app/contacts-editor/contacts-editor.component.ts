@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactsService } from '../contacts.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
 import { EventBusService } from '../event-bus.service';
@@ -30,7 +30,7 @@ export class ContactsEditorComponent implements OnInit {
     this.contact = this._store.pipe(
       select(selectContact()),
       map(contact => ({ ...contact })));
-      
+
     this._eventBusService.emit('appTitleChange', 'Editing contact');
   }
 
