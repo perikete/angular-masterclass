@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
 import { EventBusService } from '../event-bus.service';
-import { map, filter, tap } from 'rxjs/operators';
-import { ContactsFacade } from '../contacts-effects.service';
+import { map } from 'rxjs/operators';
+import { ContactsFacade } from '../contacts-facade';
 
 @Component({
   selector: 'amc-contacts-editor',

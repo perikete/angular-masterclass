@@ -28,7 +28,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { FEATURE_KEY, contactsReducer, INITIAL_STATE } from './state/contacts/contacts.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ContactExistsGuard } from './contact-exists.guard';
-import { ContactsFacade } from './contacts-effects.service';
+import { ContactsFacade } from './contacts-facade';
+import { ContactsEffects } from './contacts-effects';
 
 export function confirmNavigationGuard(component) {
   const question = 'Navigate away without saving?';
@@ -62,7 +63,7 @@ export function confirmNavigationGuard(component) {
     HttpClientModule,
     ReactiveFormsModule,
     EffectsModule.forRoot([]),
-    EffectsModule.forRoot([ContactsFacade]),
+    EffectsModule.forRoot([ContactsEffects]),
     StoreModule.forRoot({}, { metaReducers: !environment.production ? [storeFreeze] : [] }),
     StoreModule.forFeature(FEATURE_KEY, contactsReducer, { initialState: INITIAL_STATE }), 
     
@@ -73,6 +74,7 @@ export function confirmNavigationGuard(component) {
   providers: [
     ContactsService,
     ContactExistsGuard,
+    ContactsFacade,
     { provide: 'ConfirmNavigationGuard', useValue: confirmNavigationGuard }
   ]
 })

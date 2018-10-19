@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ContactsFacade } from './contacts-effects.service';
+import { ContactsFacade } from './contacts-facade';
 
 @Injectable({
   providedIn: 'root'

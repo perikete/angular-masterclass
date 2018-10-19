@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { EventBusService } from '../event-bus.service';
-import { ContactsFacade } from '../contacts-effects.service';
+import { ContactsFacade } from '../contacts-facade';
 
 @Component({
   selector: 'trm-contacts-list',
