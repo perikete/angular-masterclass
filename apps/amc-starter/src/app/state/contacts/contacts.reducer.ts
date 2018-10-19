@@ -17,7 +17,7 @@ export const INITIAL_STATE: ContactsState = {
 
 export function contactsReducer(state: ContactsState = INITIAL_STATE, action: ContactsActions) {
 
-    switch (action.type) {
+    switch (action.type) {        
 
         case ContactActionTypes.SEARCH_CONTACT_SUCCESS:
 
@@ -33,7 +33,7 @@ export function contactsReducer(state: ContactsState = INITIAL_STATE, action: Co
                 loaded: true
             };
 
-        case ContactActionTypes.LOAD_CONTACTS_SUCCESS:            
+        case ContactActionTypes.LOAD_CONTACTS_SUCCESS: 
             const contactList = action.payload.reduce(
                 (entities, contact) => {
                     return { ...entities, [contact.id]: contact }
@@ -45,7 +45,7 @@ export function contactsReducer(state: ContactsState = INITIAL_STATE, action: Co
                 entities: contactList,
                 loaded: true
             };
-            
+
         case ContactActionTypes.UPDATE_CONTACT_SUCCESS:
             return {
                 ...state, entities: {

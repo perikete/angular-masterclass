@@ -3,11 +3,8 @@ import { Router } from '@angular/router';
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
 import { EventBusService } from '../event-bus.service';
-import { ApplicationState } from '../state/app-state';
-import { Store, select } from '@ngrx/store';
-import { UpdateContactAction } from '../state/contacts/contacts.action';
-import { map } from 'rxjs/operators';
-import { ContactsQuery } from '../state/contacts/contacts-selectors';
+import { map, filter, tap } from 'rxjs/operators';
+import { ContactsFacade } from '../contacts-effects.service';
 
 @Component({
   selector: 'amc-contacts-editor',
@@ -22,12 +19,12 @@ export class ContactsEditorComponent implements OnInit {
   constructor(
     private _router: Router,
     private _eventBusService: EventBusService,
-    private _store: Store<ApplicationState>) { }
+    private _facade: ContactsFacade) { }
 
   ngOnInit() {
-    this.contact = this._store.pipe(
-      select(ContactsQuery.getSelectedContact),
-      map(contact => ({ ...contact })));
+    this.contact = this._facade.selectedContact$.pipe(
+      map(contact => ({ ...contact }))
+    );
 
     this._eventBusService.emit('appTitleChange', 'Editing contact');
   }
@@ -37,9 +34,8 @@ export class ContactsEditorComponent implements OnInit {
   }
 
   save(contact: Contact) {
-    this._store.dispatch(new UpdateContactAction(contact)); 
-    
-    this.goToDetails(contact);
+    this._facade.updateContact(contact)
+    .subscribe(() =>  this.goToDetails(contact));
   }
 
   private goToDetails(contact: Contact) {

@@ -23,7 +23,6 @@ export class SearchContactsAction implements Action {
     readonly type = ContactActionTypes.SEARCH_CONTACT;
 
     constructor(readonly payload: Observable<string>) {
-
     }
 }
 export class LoadContactSuccessAction implements Action {

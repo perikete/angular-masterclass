@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Contact } from './models/contact';
 import { HttpClient } from '@angular/common/http';
 import { ContactsResponse, ContactReponse, EmailCheckResponse } from './contact.responses';
-import { map, delay, takeUntil, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { map, delay, takeUntil, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { Observable, merge } from 'rxjs';
 
 const API_ENDPOINT = 'http://localhost:4202/api';
@@ -31,7 +31,9 @@ export class ContactsService {
 
   public search(terms: Observable<string>, debounceMs = 400): Observable<Contact[]> {
     const search = (term) => this._http.get<ContactsResponse>(`${API_ENDPOINT}/search?text=${term}`)
-      .pipe(map(data => data.items));
+      .pipe(
+        tap(term => console.log('search: term')),
+        map(data => data.items));
 
     const allContacts$ = this.getContacts()
       .pipe(

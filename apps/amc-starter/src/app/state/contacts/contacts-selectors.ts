@@ -9,7 +9,7 @@ export namespace ContactsQuery {
     export const getSelectedContactId = createSelector(getContactsState, (state: ContactsState) => state.selectedContactId);
 
     export const getContacts = createSelector(getContactEntities, (entities) => {
-        const contacts = Object.keys(entities).map(id => entities[id]);        
+        const contacts = Object.keys(entities).map(id => entities[id]);
         return contacts;
     });
 
